@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Hellins · Inglés en Móstoles</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Academia Hellins, Móstoles: inglés desde 1 año, exámenes Cambridge y TOEIC, speaking clubs y refuerzo escolar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Layout: verde bosque de fondo, "pantalla" lima con bento de tarjetas; letras gigantes y píldoras que flotan */
+  :root{
+    color-scheme:light;
+    --forest:#2f4a1c;
+    --forest-2:#3b5a25;
+    --deep:#1f3311;
+    --cream:#fbf7dc;
+    --paper:#fdfcf2;
+    --lime:#d3df6b;
+    --lime-2:#c2d150;
+    --pink:#f8d7ec;
+    --ink:#1e2a12;
+    --muted:#55623f;
+    --display:'Unbounded','Arial Black',system-ui,sans-serif;
+    --body:'Onest',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --r:26px;
+    --gl:max(16px,env(safe-area-inset-left,0px));
+    --gr:max(16px,env(safe-area-inset-right,0px));
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--forest);color:var(--ink);font-family:var(--body);line-height:1.55;overflow-x:hidden}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;color:inherit}
+  h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.05;letter-spacing:-.02em;text-wrap:balance}
+  :focus-visible{outline:2px solid var(--lime);outline-offset:3px;border-radius:8px}
+  .wrap{width:100%;max-width:1280px;margin-inline:auto;padding-left:var(--gl);padding-right:var(--gr)}
+  .pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:6px 14px;font-size:.82rem;font-weight:600;white-space:nowrap}
+  .pill.o{border:1px solid rgba(251,247,220,.55);color:var(--cream)}
+  .pill.l{background:var(--lime);color:var(--ink)}
+  .pill.p{background:var(--pink);color:var(--ink)}
+  .pill.c{background:var(--cream);color:var(--ink)}
+  .arrow{width:38px;height:38px;border-radius:50%;background:var(--forest);color:var(--cream);display:grid;place-items:center;flex-shrink:0;transition:transform .4s cubic-bezier(.3,1.6,.5,1),background .3s}
+  .arrow svg{width:16px;height:16px}
+  a:hover .arrow,.card:hover .arrow,button:hover .arrow{transform:rotate(45deg) scale(1.08)}
+  .btn{display:inline-flex;align-items:center;gap:12px;background:var(--forest);color:var(--cream);border-radius:999px;padding:16px 26px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.85rem;border:0;cursor:pointer;transition:transform .2s}
+  .btn .arrow{background:var(--lime);color:var(--ink);width:34px;height:34px;margin-right:-14px}
+
+  /* progress + cursor */
+  .progress{position:fixed;top:0;left:0;height:3px;width:100%;background:var(--lime);transform-origin:left;transform:scaleX(0);z-index:100}
+  .blob{position:fixed;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--lime);mix-blend-mode:difference;pointer-events:none;z-index:99;transform:translate(-50%,-50%);transition:width .3s,height .3s,opacity .3s;opacity:0}
+  .blob.big{width:70px;height:70px}
+  @media (pointer:fine){.blob{opacity:1}}
+
+  .demo{background:var(--deep);color:#c9d3b4;font-size:.75rem;text-align:center;padding-block:6px}
+
+  /* ---------- HERO / WORDMARK ---------- */
+  .top{position:relative;overflow:hidden;padding-block:26px 0}
+  .orbit{position:absolute;inset:-10% -20% auto;height:130%;pointer-events:none;opacity:.35}
+  .orbit ellipse{fill:none;stroke:var(--lime-2);stroke-width:26;opacity:.35}
+  .orbit g{transform-origin:50% 50%;animation:spin 60s linear infinite}
+  .orbit g+g{animation-duration:90s;animation-direction:reverse}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;position:relative}
+  .meta div{display:flex;gap:8px;flex-wrap:wrap}
+  .tagline{color:var(--cream);font-size:clamp(1rem,1.8vw,1.4rem);margin-top:34px;position:relative}
+  .word{position:relative;display:flex;align-items:flex-end;justify-content:space-between;font-family:var(--display);font-weight:800;color:var(--cream);font-size:clamp(3.2rem,14.6vw,13.5rem);line-height:.86;letter-spacing:-.04em;margin-top:6px;user-select:none}
+  .word .ch{display:inline-block;animation:drop 1s cubic-bezier(.3,1.5,.5,1) both;transition:transform .35s cubic-bezier(.3,1.6,.5,1),color .3s;cursor:default}
+  .word .ch:hover{transform:translateY(-12%) rotate(-6deg);color:var(--lime)}
+  @keyframes drop{from{transform:translateY(-120%) rotate(-12deg);opacity:0}to{transform:none;opacity:1}}
+  .word .shape{display:inline-block;flex-shrink:0;width:.62em;height:.74em;margin-bottom:.02em;animation:drop 1s cubic-bezier(.3,1.5,.5,1) both}
+  .word .shape.bubble{background:var(--lime);border-radius:50% 50% 50% 0}
+  .word .shape.drop{background:var(--pink);border-radius:50% 50% 0 50%;width:.74em}
+  .word .shape span{display:block;width:100%;height:100%;animation:wobble 4s ease-in-out infinite}
+  @keyframes wobble{50%{transform:scale(.94) rotate(4deg)}}
+  .floaters{position:absolute;inset:0;pointer-events:none}
+  .floaters .pill{position:absolute;animation:bob 6s ease-in-out infinite;box-shadow:0 10px 20px -10px rgba(0,0,0,.4)}
+  @keyframes bob{50%{translate:0 -14px}}
+
+  /* ---------- SCREEN (bento) ---------- */
+  .screen{background:var(--lime);border-radius:34px;padding:14px;margin-top:-1.2vw;position:relative;z-index:2;box-shadow:0 40px 80px -40px rgba(0,0,0,.6)}
+  header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;padding-block:10px;transition:transform .4s}
+  body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--forest);z-index:70}
+  .navbar{display:flex;align-items:center;gap:10px;background:var(--lime);border-radius:999px;padding:6px;box-shadow:0 14px 30px -18px rgba(0,0,0,.6)}
+  .logo-dot{width:42px;height:42px;border-radius:50%;overflow:hidden;background:#fff;flex-shrink:0}
+  .logo-dot img{width:100%;height:100%;object-fit:cover}
+  .navlinks{flex:1;display:flex;justify-content:space-around;background:var(--paper);border-radius:999px;padding:10px 18px;font-size:.9rem;font-weight:500}
+  .navlinks a{position:relative}
+  .navlinks a::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:2px;background:var(--forest);transform:scaleX(0);transition:transform .3s}
+  .navlinks a:hover::after{transform:scaleX(1)}
+  .nav-cta{display:flex;gap:6px}
+  .nav-cta a{border-radius:999px;padding:10px 16px;font-size:.88rem;font-weight:600;transition:transform .25s}
+  .nav-cta a:hover{transform:translateY(-2px)}
+  .burger{display:none;margin-left:auto;background:var(--forest);color:var(--cream);border:0;border-radius:999px;padding:11px 18px;font-weight:600;cursor:pointer}
+
+  .bento{display:grid;grid-template-columns:1.25fr .9fr;grid-template-rows:auto auto;gap:12px;margin-top:12px}
+  .card{border-radius:var(--r);position:relative;overflow:hidden}
+  .hero-card{background:var(--paper);padding:clamp(22px,3.4vw,44px);display:flex;flex-direction:column;justify-content:space-between;gap:26px;min-height:420px}
+  .big{font-family:var(--display);font-size:clamp(2.2rem,5vw,4.3rem);font-weight:600;line-height:1.02;color:var(--ink)}
+  .big .row{display:flex;align-items:center;flex-wrap:wrap;gap:.2em}
+  .big .outlined{border:2px solid var(--forest);border-radius:999px;padding:.02em .32em .08em;color:var(--forest);display:inline-block;overflow:hidden;position:relative;height:1.18em;vertical-align:bottom}
+  .rot{display:inline-flex;flex-direction:column;transition:transform .7s cubic-bezier(.7,0,.2,1)}
+  .rot span{height:1.18em;line-height:1.1;display:block;white-space:nowrap}
+  .dots{display:inline-flex;gap:0}
+  .dots i{display:inline-block;width:.5em;height:.5em;border-radius:50% 50% 50% 0;background:var(--lime);animation:hop 1.6s ease-in-out infinite}
+  .dots i:nth-child(2){background:var(--lime-2);animation-delay:.15s;margin-left:-.12em}
+  .dots i:nth-child(3){background:var(--pink);animation-delay:.3s;margin-left:-.12em}
+  @keyframes hop{50%{transform:translateY(-30%)}}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .tall{grid-row:1/3;grid-column:2;min-height:560px;background:var(--forest-2)}
+  .tall .stack{position:absolute;inset:0}
+  .tall .stack img{position:absolute;object-fit:cover;border-radius:20px;transition:transform .8s cubic-bezier(.2,.8,.2,1);box-shadow:0 20px 40px -20px rgba(0,0,0,.6)}
+  .tall .s1{left:6%;top:5%;width:60%;aspect-ratio:1;transform:rotate(-4deg)}
+  .tall .s2{right:5%;top:30%;width:52%;aspect-ratio:1;transform:rotate(5deg)}
+  .tall .s3{left:10%;bottom:5%;width:56%;aspect-ratio:1;transform:rotate(-2deg)}
+  .tall:hover .s1{transform:rotate(-8deg) translate(-4%,-2%)}
+  .tall:hover .s2{transform:rotate(9deg) translate(4%,0)}
+  .tall:hover .s3{transform:rotate(2deg) translate(0,3%)}
+  .tall .bubble{position:absolute;right:8%;bottom:12%;background:var(--cream);border-radius:20px 20px 20px 4px;padding:10px 14px;font-weight:600;font-size:.9rem;animation:bob 5s ease-in-out infinite}
+  .corner{position:absolute;top:14px;right:14px;z-index:2}
+  .row3{grid-column:1;display:grid;grid-template-columns:1fr 1fr 1.05fr;gap:12px}
+  .mini{min-height:190px;padding:20px;display:flex;flex-direction:column;justify-content:flex-end}
+  .mini.photo{background:#8aa36a}
+  .mini.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s}
+  .mini.photo:hover img{transform:scale(1.08)}
+  .mini.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 45%,rgba(20,30,10,.75))}
+  .mini.photo .lbl{position:relative;z-index:1;color:#fff}
+  .num{font-family:var(--display);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
+  .mini small{font-size:.86rem}
+  .mini.cream{background:var(--cream)}
+  .mini.pink{background:var(--pink)}
+  .faces{display:flex;margin-top:12px}
+  .faces img{width:38px;height:38px;border-radius:50%;border:2px solid var(--cream);object-fit:cover;margin-left:-10px;transition:transform .3s}
+  .faces img:first-child{margin-left:0}
+  .faces:hover img{transform:translateY(-4px)}
+  .faces:hover img:nth-child(2){transition-delay:.05s}.faces:hover img:nth-child(3){transition-delay:.1s}.faces:hover img:nth-child(4){transition-delay:.15s}
+
+  /* ---------- MARQUEE BANDS ---------- */
+  .bands{position:relative;height:210px;margin-block:60px 20px;overflow:hidden}
+  .band{position:absolute;left:-5%;right:-5%;top:50%;padding-block:16px;overflow:hidden;white-space:nowrap}
+  .band.a{background:var(--lime);transform:translateY(-50%) rotate(-4deg)}
+  .band.b{background:var(--pink);transform:translateY(-50%) rotate(3deg)}
+  .band .tr{display:inline-flex;gap:40px;font-family:var(--display);font-weight:600;font-size:clamp(1.3rem,2.6vw,2rem);color:var(--ink);animation:marq 26s linear infinite}
+  .band.b .tr{animation-direction:reverse;animation-duration:32s}
+  .band .tr span::after{content:"✺";margin-left:40px;color:var(--forest)}
+  @keyframes marq{to{transform:translateX(-50%)}}
+
+  /* ---------- SECTION HEADS ---------- */
+  section{padding-block:80px;position:relative}
+  .head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:40px;color:var(--cream)}
+  .head h2{font-size:clamp(2rem,5vw,4rem);max-width:14ch}
+  .head p{max-width:40ch;color:#d9e0c6}
+  .head .pill{margin-bottom:16px}
+
+  /* ---------- HORIZONTAL COURSES ---------- */
+  .hs{position:relative}
+  .hs-sticky{position:sticky;top:env(safe-area-inset-top,0px);height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+  .hs-track{display:flex;gap:20px;padding-left:var(--gl);padding-right:var(--gr);will-change:transform}
+  .course{flex:0 0 min(420px,82vw);border-radius:var(--r);padding:24px;min-height:460px;display:flex;flex-direction:column;justify-content:space-between;gap:18px;transition:transform .4s}
+  .course:hover{transform:translateY(-8px) rotate(-1deg)}
+  .course .ph{border-radius:18px;overflow:hidden;aspect-ratio:16/11;background:rgba(0,0,0,.08)}
+  .course .ph img{width:100%;height:100%;object-fit:cover;transition:transform .8s}
+  .course:hover .ph img{transform:scale(1.07)}
+  .course h3{font-size:1.6rem;margin-block:8px}
+  .course p{font-size:.95rem}
+  .course .foot{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .course .price{font-family:var(--display);font-size:1.3rem;font-weight:600}
+  .course .price small{font-family:var(--body);font-size:.8rem;font-weight:500}
+  .course.c1{background:var(--cream)}
+  .course.c2{background:var(--lime)}
+  .course.c3{background:var(--pink)}
+  .course.c4{background:var(--paper)}
+  .course.c5{background:var(--forest-2);color:var(--cream)}
+  .course.c5 .arrow{background:var(--lime);color:var(--ink)}
+  .hs-hint{color:#c9d3b4;font-size:.85rem;margin-top:22px;padding-left:var(--gl)}
+  .hs-bar{height:3px;background:rgba(251,247,220,.15);border-radius:3px;margin:16px var(--gr) 0 var(--gl);overflow:hidden}
+  .hs-bar i{display:block;height:100%;width:100%;background:var(--lime);transform-origin:left;transform:scaleX(0)}
+
+  /* ---------- SCROLL TEXT ---------- */
+  .manifesto{font-family:var(--display);font-weight:600;font-size:clamp(1.6rem,3.6vw,3.1rem);line-height:1.18;color:var(--cream);max-width:22ch}
+  .manifesto .w{opacity:.16;transition:opacity .2s}
+  .manifesto .w.hl{color:var(--lime)}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:56px}
+  .step{border:1px solid rgba(251,247,220,.25);border-radius:var(--r);padding:22px;color:var(--cream);transition:background .4s,color .4s,transform .4s}
+  .step:hover{background:var(--cream);color:var(--ink);transform:translateY(-6px)}
+  .step b{font-family:var(--display);font-size:2.4rem;font-weight:600;display:block;line-height:1;color:var(--lime);transition:color .4s}
+  .step:hover b{color:var(--forest)}
+  .step h3{font-size:1.05rem;margin-block:16px 6px;font-family:var(--body);font-weight:700;letter-spacing:0}
+  .step p{font-size:.92rem;opacity:.8}
+
+  /* ---------- QUIZ ---------- */
+  .quiz{background:var(--cream);border-radius:34px;padding:clamp(24px,4vw,52px);display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center;overflow:hidden;position:relative}
+  .quiz h2{font-size:clamp(1.8rem,3.6vw,3rem)}
+  .quiz .q{font-weight:600;font-size:1.15rem;margin-bottom:16px}
+  .opts{display:grid;gap:10px}
+  .opt{text-align:left;background:var(--paper);border:1.5px solid rgba(47,74,28,.25);border-radius:16px;padding:14px 18px;font-weight:500;cursor:pointer;transition:all .25s}
+  .opt:hover{border-color:var(--forest);transform:translateX(6px)}
+  .opt.ok{background:var(--lime);border-color:var(--forest)}
+  .opt.ko{background:var(--pink);border-color:#c27aa4}
+  .qbar{display:flex;gap:6px;margin-bottom:20px}
+  .qbar i{flex:1;height:6px;border-radius:6px;background:rgba(47,74,28,.15);transition:background .4s}
+  .qbar i.on{background:var(--forest)}
+  .result{text-align:center;animation:pop .6s cubic-bezier(.3,1.6,.5,1)}
+  .result .lvl{font-family:var(--display);font-size:5rem;font-weight:800;color:var(--forest);line-height:1}
+  @keyframes pop{from{transform:scale(.7);opacity:0}to{transform:none;opacity:1}}
+  .quiz .deco{position:absolute;right:-60px;bottom:-60px;width:220px;height:220px;border-radius:50% 50% 0 50%;background:var(--pink);opacity:.6;animation:spin 30s linear infinite}
+
+  /* ---------- EXAM ORBIT ---------- */
+  .exams{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+  .exams{overflow-x:clip;padding-block:30px}
+  .orbit-box{position:relative;aspect-ratio:1;max-width:min(480px,calc(100% - 90px));width:100%;margin-inline:auto}
+  .orbit-box .center{position:absolute;inset:32%;border-radius:50%;background:var(--lime);display:grid;place-items:center;text-align:center;font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,4vw,2.6rem);color:var(--ink);animation:pulse 3s ease-in-out infinite}
+  .orbit-box .center small{display:block;font-family:var(--body);font-weight:600;font-size:.8rem}
+  @keyframes pulse{50%{transform:scale(1.05)}}
+  .ring{position:absolute;inset:0;border-radius:50%;border:1.5px dashed rgba(251,247,220,.3);animation:spin 36s linear infinite}
+  .ring.r2{inset:14%;animation-duration:24s;animation-direction:reverse}
+  .ring .pill{position:absolute;transform:translate(-50%,-50%)}
+  .ring .pill > span{display:inline-block;animation:spin 36s linear infinite reverse}
+  .ring.r2 .pill > span{animation:spin 24s linear infinite}
+  .exams ul{list-style:none;display:grid;gap:12px;color:var(--cream)}
+  .exams li{display:flex;justify-content:space-between;gap:16px;border-bottom:1px solid rgba(251,247,220,.2);padding-bottom:12px;font-size:1.05rem}
+  .exams li b{font-family:var(--display);font-weight:600;color:var(--lime)}
+
+  /* ---------- TEACHERS ---------- */
+  .teachers{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .flip{perspective:1000px;aspect-ratio:3/4;cursor:pointer}
+  .flip-in{position:relative;width:100%;height:100%;transition:transform .8s cubic-bezier(.3,1.2,.4,1);transform-style:preserve-3d}
+  .flip:hover .flip-in,.flip.on .flip-in{transform:rotateY(180deg)}
+  .face,.back{position:absolute;inset:0;border-radius:var(--r);overflow:hidden;backface-visibility:hidden}
+  .face img{width:100%;height:100%;object-fit:cover}
+  .face .name{position:absolute;left:12px;right:12px;bottom:12px;background:var(--cream);border-radius:18px;padding:12px 14px}
+  .face .name b{display:block;font-weight:700}
+  .face .name small{color:var(--muted)}
+  .back{transform:rotateY(180deg);background:var(--lime);padding:24px;display:flex;flex-direction:column;justify-content:space-between}
+  .back q{font-family:var(--display);font-size:1.15rem;font-weight:600;line-height:1.25}
+  .back .tags{display:flex;flex-wrap:wrap;gap:6px}
+
+  /* ---------- REVIEWS ---------- */
+  .reviews{display:grid;gap:14px;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+  .rtrack{display:flex;gap:14px;width:max-content;animation:marq 50s linear infinite}
+  .rtrack.rev{animation-direction:reverse;animation-duration:60s}
+  .reviews:hover .rtrack{animation-play-state:paused}
+  .rv-card{width:360px;background:var(--cream);border-radius:22px;padding:20px;display:grid;grid-template-columns:52px 1fr;gap:14px}
+  .rv-card:nth-child(3n+2){background:var(--pink)}
+  .rv-card:nth-child(3n){background:var(--lime)}
+  .rv-card img{width:52px;height:52px;border-radius:50%;object-fit:cover}
+  .rv-card p{font-size:.93rem}
+  .rv-card b{display:block;margin-top:8px;font-size:.85rem}
+  .stars{color:var(--forest);letter-spacing:2px;font-size:.8rem}
+
+  /* ---------- FAQ ---------- */
+  .faq{display:grid;gap:10px;max-width:900px}
+  details{background:var(--forest-2);border-radius:22px;padding:20px 24px;color:var(--cream);transition:background .3s}
+  details[open]{background:var(--cream);color:var(--ink)}
+  summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:16px;font-weight:600;font-size:1.05rem}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--lime);color:var(--ink);display:grid;place-items:center;font-size:1.2rem;transition:transform .4s cubic-bezier(.3,1.6,.5,1)}
+  details[open] summary::after{transform:rotate(135deg)}
+  details p{margin-top:12px;color:var(--muted)}
+
+  /* ---------- CTA ---------- */
+  .cta{background:var(--pink);border-radius:34px;padding:clamp(26px,4vw,56px);display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;position:relative;overflow:hidden}
+  .cta h2{font-size:clamp(2.4rem,6vw,5rem)}
+  .cta .info{display:grid;gap:4px;margin-top:24px;font-weight:600}
+  .cta .info span{user-select:all}
+  form{background:var(--paper);border-radius:26px;padding:24px;display:grid;gap:12px;position:relative;z-index:1}
+  label{display:grid;gap:6px;font-size:.82rem;font-weight:600;color:var(--muted)}
+  input,select{font:inherit;font-size:.98rem;padding:14px 16px;border-radius:14px;border:1.5px solid rgba(47,74,28,.2);background:#fff;color:var(--ink)}
+  input:focus,select:focus{outline:none;border-color:var(--forest)}
+  .msg{font-weight:600;color:var(--forest)}
+  .cta .spark{position:absolute;width:140px;height:140px;border-radius:50% 50% 50% 0;background:var(--lime);left:-40px;bottom:-40px;animation:spin 20s linear infinite}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding-block:60px 30px;color:var(--cream);overflow:hidden}
+  .fword{font-family:var(--display);font-weight:800;font-size:clamp(3.4rem,15vw,13rem);line-height:.9;letter-spacing:-.04em;display:flex;justify-content:space-between;color:var(--forest-2)}
+  .fword span{transition:color .3s,transform .4s cubic-bezier(.3,1.6,.5,1)}
+  .fword span:hover{color:var(--lime);transform:translateY(-10%)}
+  .fbar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;margin-top:30px;font-size:.88rem;color:#c9d3b4}
+  .fbar nav{display:flex;gap:18px;flex-wrap:wrap}
+
+  /* reveal: visible en reposo */
+  .rv{transition:transform 1s cubic-bezier(.2,.8,.2,1),opacity 1s}
+  .js .rv:not(.in){opacity:.3;transform:translateY(40px) scale(.98)}
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    .js .rv:not(.in){opacity:1;transform:none}
+  }
+
+  @media (max-width:1000px){
+    .bento{grid-template-columns:1fr}
+    .tall{grid-row:auto;grid-column:auto;min-height:420px}
+    .row3{grid-column:auto}
+    .quiz,.exams,.cta{grid-template-columns:1fr}
+    .teachers{grid-template-columns:1fr 1fr}
+    .steps{grid-template-columns:1fr 1fr}
+    .navlinks{display:none}
+    .navlinks.open{display:flex;position:absolute;left:var(--gl);right:var(--gr);top:calc(100% + 4px);flex-direction:column;gap:4px;border-radius:24px;padding:14px 20px;box-shadow:0 20px 40px -20px rgba(0,0,0,.5)}
+    .navlinks.open a{padding-block:10px}
+    .nav-cta{margin-left:auto}
+    .burger{display:block;margin-left:0}
+  }
+  @media (max-width:760px){
+    .floaters{display:none}
+    .row3{grid-template-columns:1fr 1fr}
+    .row3 .mini.photo{grid-column:1/-1}
+    .nav-cta .hide-sm{display:none}
+    .hs{height:auto!important}
+    .hs-sticky{position:static;height:auto}
+    .hs-track{overflow-x:auto;scroll-snap-type:x mandatory;transform:none!important;padding-bottom:10px}
+    .course{scroll-snap-align:start;min-height:400px}
+    .hs-bar{display:none}
+    .rv-card{width:280px}
+    section{padding-block:56px}
+  }
+  @media (max-width:480px){
+    .teachers,.steps{grid-template-columns:1fr}
+    .flip{aspect-ratio:4/5}
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="blob" id="blob" aria-hidden="true"></div>
+<div class="demo">Propuesta de diseño · textos, precios y personas de ejemplo (fotos generadas con IA)</div>
+
+<!-- TOP / WORDMARK -->
+<div class="top">
+  <svg class="orbit" viewBox="0 0 1400 900" preserveAspectRatio="none" aria-hidden="true">
+    <g><ellipse cx="700" cy="450" rx="620" ry="260" transform="rotate(-18 700 450)"/></g>
+    <g><ellipse cx="700" cy="450" rx="520" ry="330" transform="rotate(24 700 450)"/></g>
+  </svg>
+  <div class="wrap">
+    <div class="meta">
+      <div><span class="pill o">Academia de idiomas</span><span class="pill o">Móstoles</span></div>
+      <div><span class="pill o">Curso 2026–27</span></div>
+    </div>
+    <p class="tagline">Inglés y refuerzo escolar para todas las edades</p>
+    <div class="word" id="word" aria-label="Hellins">
+      <span class="ch">H</span><span class="ch">E</span><span class="shape bubble"><span></span></span><span class="ch">L</span><span class="ch">L</span><span class="ch">I</span><span class="ch">N</span><span class="shape drop"><span></span></span><span class="ch">S</span>
+    </div>
+    <div class="floaters" id="floaters" aria-hidden="true">
+      <span class="pill p" style="left:42%;top:18%">Baby English desde 1 año</span>
+      <span class="pill l" style="right:6%;top:24%;animation-delay:-2s">Cambridge B2 First</span>
+      <span class="pill l" style="left:6%;top:62%;animation-delay:-1s">Speaking clubs</span>
+      <span class="pill p" style="left:38%;top:70%;animation-delay:-3s">Apoyo al bilingüismo</span>
+      <span class="pill c" style="left:28%;top:84%;animation-delay:-4s">TOEIC</span>
+      <span class="pill c" style="right:12%;top:68%;animation-delay:-2.5s">Refuerzo ESO y Bach.</span>
+    </div>
+  </div>
+</div>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <div class="navbar">
+      <a href="#inicio" class="logo-dot" aria-label="Academia Hellins, inicio"><img src="../img/logo.jpg" alt=""></a>
+      <nav class="navlinks" id="navlinks" aria-label="Principal">
+        <a href="#cursos">Cursos</a><a href="#test">Test de nivel</a><a href="#metodo">Método</a><a href="#profes">Profes</a><a href="#faq">Dudas</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="#contacto" class="hide-sm" style="background:var(--pink)">Clase gratis</a>
+        <a href="#contacto" style="background:var(--forest);color:var(--cream)">Contacto</a>
+      </div>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="navlinks">Menú</button>
+    </div>
+  </div>
+</header>
+
+<main id="inicio">
+<div class="wrap">
+  <div class="screen">
+    <div class="bento">
+      <div class="card hero-card">
+        <div class="big">
+          <div class="row">Aprende <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
+          <div class="row"><span class="outlined"><span class="rot" id="rot1"><span>inglés</span><span>jugando</span><span>a tu ritmo</span><span>inglés</span></span></span></div>
+          <div class="row">habla</div>
+          <div class="row"><span class="outlined"><span class="rot" id="rot2"><span>sin miedo</span><span>en clase</span><span>en Londres</span><span>sin miedo</span></span></span></div>
+        </div>
+        <div class="hero-actions">
+          <a href="#contacto" class="btn magnet">Reserva tu clase gratis <span class="arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12L12 4M6 4h6v6"/></svg></span></a>
+          <a href="#test" class="pill c" style="padding:12px 18px;border:1.5px solid var(--forest)">Hacer el test de nivel</a>
+        </div>
+      </div>
+      <div class="card tall tilt">
+        <a href="#profes" class="corner arrow" aria-label="Conoce al equipo"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12L12 4M6 4h6v6"/></svg></a>
+        <div class="stack" aria-hidden="true">
+          <img class="s1" src="../img/j-risa.jpg" alt="">
+          <img class="s2" src="../img/j-alegre.jpg" alt="">
+          <img class="s3" src="../img/j-chico.jpg" alt="">
+        </div>
+        <div class="bubble">¡Hello, Hellins! 👋</div>
+      </div>
+      <div class="row3">
+        <div class="card mini photo tilt">
+          <img src="../img/j-gorra.jpg" alt="">
+          <a href="#metodo" class="corner arrow" aria-label="Nuestro método" style="background:var(--cream);color:var(--ink)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12L12 4M6 4h6v6"/></svg></a>
+          <div class="lbl"><div class="num" data-count="15" data-suffix="+">15+</div><small>años en Móstoles</small></div>
+        </div>
+        <div class="card mini cream tilt">
+          <a href="#opiniones" class="corner arrow" aria-label="Opiniones"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12L12 4M6 4h6v6"/></svg></a>
+          <div class="num" data-count="1200" data-suffix="+">1200+</div><small>alumnos felices</small>
+          <div class="faces"><img src="../img/j-chica.jpg" alt=""><img src="../img/j-nino.jpg" alt=""><img src="../img/j-sonrisa.jpg" alt=""><img src="../img/j-amigo.jpg" alt=""></div>
+        </div>
+        <div class="card mini pink tilt">
+          <a href="#cursos" class="corner arrow" aria-label="Cursos"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12L12 4M6 4h6v6"/></svg></a>
+          <div class="num" data-count="8">8</div><small>alumnos máx. por grupo</small>
+          <div class="num" style="margin-top:10px" data-count="94" data-suffix="%">94%</div><small>aprueban Cambridge</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BANDS -->
+<div class="bands" aria-hidden="true">
+  <div class="band b"><div class="tr"><span>Speaking clubs</span><span>Baby English</span><span>Phonics</span><span>Técnicas de estudio</span><span>Speaking clubs</span><span>Baby English</span><span>Phonics</span><span>Técnicas de estudio</span></div></div>
+  <div class="band a"><div class="tr"><span>Te hacemos bilingüe desde 1 año</span><span>KET · PET · First · Advanced · TOEIC</span><span>Te hacemos bilingüe desde 1 año</span><span>KET · PET · First · Advanced · TOEIC</span></div></div>
+</div>
+
+<!-- COURSES (horizontal) -->
+<section class="hs" id="cursos" style="padding:0">
+  <div class="hs-sticky">
+    <div class="wrap head" style="margin-bottom:28px">
+      <div><span class="pill l">Cursos</span><h2>Un curso para cada edad</h2></div>
+      <p>Desliza para verlos todos. Grupos reducidos, mañana o tarde, de lunes a viernes.</p>
+    </div>
+    <div class="hs-track" id="track">
+      <a href="#contacto" class="course c1"><div class="ph"><img src="../img/j-bebe.jpg" alt="Bebé sonriendo"></div><div><span class="pill p">1–5 años</span><h3>Baby &amp; Infant English</h3><p>Canciones, cuentos y juegos 100 % en inglés. Lo aprenden igual que su lengua materna.</p></div><div class="foot"><span class="price">55 € <small>/ mes</small></span><span class="arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12L12 4M6 4h6v6"/></svg></span></div></a>
+      <a href="#contacto" class="course c2"><div class="ph"><img src="../img/j-nino.jpg" alt="Niño de primaria"></div><div><span class="pill c">6–12 años</span><h3>Primaria y bilingüismo</h3><p>Inglés por niveles y apoyo en Science, Arts y el resto de asignaturas en inglés.</p></div><div class="foot"><span class="price">55 € <small>/ mes</small></span><span class="arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12L12 4M6 4h6v6"/></svg></span></div></a>
+      <a href="#contacto" class="course c3"><div class="ph"><img src="../img/j-chica.jpg" alt="Estudiante adolescente"></div><div><span class="pill l">A2 → C1</span><h3>Exámenes oficiales</h3><p>KET, PET, First, Advanced y TOEIC con simulacros reales cada mes.</p></div><div class="foot"><span class="price">75 € <small>/ mes</small></span><span class="arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12L12 4M6 4h6v6"/></svg></span></div></a>
+      <a href="#contacto" class="course c4"><div class="ph"><img src="../img/j-joven.jpg" alt="Estudiante de bachillerato"></div><div><span class="pill p">Primaria · ESO · Bach.</span><h3>Refuerzo escolar</h3><p>Todas las materias, deberes y preparación de exámenes, con técnicas de estudio.</p></div><div class="foot"><span class="price">60 € <small>/ mes</small></span><span class="arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12L12 4M6 4h6v6"/></svg></span></div></a>
+      <a href="#contacto" class="course c5"><div class="ph"><img src="../img/j-adulta.jpg" alt="Alumna adulta"></div><div><span class="pill l">Adultos</span><h3>Speaking clubs y empresas</h3><p>Conversación real, Business English y clases particulares en horario de mañana o tarde.</p></div><div class="foot"><span class="price">65 € <small>/ mes</small></span><span class="arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12L12 4M6 4h6v6"/></svg></span></div></a>
+    </div>
+    <div class="hs-bar"><i id="hsbar"></i></div>
+  </div>
+</section>
+
+<!-- METHOD -->
+<section id="metodo">
+  <div class="wrap">
+    <span class="pill l" style="margin-bottom:22px">Método</span>
+    <p class="manifesto" id="manifesto">En Hellins el inglés no se estudia, se usa. Hablamos desde el primer minuto, jugamos, nos equivocamos y volvemos a intentarlo hasta que sale solo.</p>
+    <div class="steps">
+      <div class="step rv"><b>01</b><h3>Test de nivel gratis</h3><p>30 minutos, oral y escrito, sin compromiso.</p></div>
+      <div class="step rv"><b>02</b><h3>Tu grupo ideal</h3><p>Por edad, nivel y horario. Máximo 8 alumnos.</p></div>
+      <div class="step rv"><b>03</b><h3>Clases que se viven</h3><p>Speaking en cada sesión e informe trimestral a familias.</p></div>
+      <div class="step rv"><b>04</b><h3>Tu certificado</h3><p>Simulacros reales hasta el día del examen oficial.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="test" style="padding-top:20px">
+  <div class="wrap">
+    <div class="quiz rv">
+      <div class="deco" aria-hidden="true"></div>
+      <div style="position:relative">
+        <span class="pill l" style="margin-bottom:16px">Test exprés</span>
+        <h2>¿Qué nivel de inglés tienes?</h2>
+        <p style="margin-top:14px;color:var(--muted)">Tres preguntas rápidas para orientarte. La prueba completa la hacemos gratis en la academia.</p>
+      </div>
+      <div id="quiz" style="position:relative" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXAMS -->
+<section>
+  <div class="wrap exams">
+    <div class="orbit-box rv" aria-hidden="true">
+      <div class="ring" id="ring1"></div>
+      <div class="ring r2" id="ring2"></div>
+      <div class="center"><div>B2<small>First aprobado</small></div></div>
+    </div>
+    <div class="rv">
+      <div class="head" style="margin-bottom:24px"><div><span class="pill p">Exámenes oficiales</span><h2>Llega al examen con ventaja</h2></div></div>
+      <ul>
+        <li>Young Learners <b>Pre-A1–A2</b></li>
+        <li>KET · A2 Key <b>A2</b></li>
+        <li>PET · B1 Preliminary <b>B1</b></li>
+        <li>First · B2 First <b>B2</b></li>
+        <li>Advanced · C1 Advanced <b>C1</b></li>
+        <li>TOEIC y EvAU <b>Todos</b></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TEACHERS -->
+<section id="profes">
+  <div class="wrap">
+    <div class="head rv"><div><span class="pill c">Equipo</span><h2>Profes que contagian</h2></div><p>Pasa el ratón (o toca) cada tarjeta para conocerles un poco más.</p></div>
+    <div class="teachers" id="teachers"></div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="opiniones" style="padding-top:20px">
+  <div class="wrap head rv"><div><span class="pill p">Opiniones</span><h2>Lo dicen ellos</h2></div></div>
+  <div class="reviews" id="reviews"></div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="head rv"><div><span class="pill l">Dudas</span><h2>Preguntas frecuentes</h2></div></div>
+    <div class="faq">
+      <details class="rv" open><summary>¿Desde qué edad pueden empezar?</summary><p>Desde 1 año, en Baby English: canciones, juegos y rutinas siempre en inglés, en grupos de máximo 6.</p></details>
+      <details class="rv"><summary>¿Cómo sé qué nivel tengo?</summary><p>Con una prueba de nivel gratuita, oral y escrita. Con el resultado te recomendamos grupo y objetivo.</p></details>
+      <details class="rv"><summary>¿Qué exámenes preparáis?</summary><p>Cambridge (Young Learners, KET, PET, First y Advanced), TOEIC y el inglés de la EvAU. También gestionamos la inscripción.</p></details>
+      <details class="rv"><summary>¿Dais refuerzo de otras asignaturas?</summary><p>Sí, todas las materias de Primaria, E.S.O. y Bachillerato, con técnicas de estudio y organización.</p></details>
+      <details class="rv"><summary>¿Hay matrícula o permanencia?</summary><p>Matrícula de 30 € con el material del primer trimestre. Sin permanencia: pagas mes a mes.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contacto">
+  <div class="wrap">
+    <div class="cta rv">
+      <div class="spark" aria-hidden="true"></div>
+      <div style="position:relative">
+        <span class="pill l">Primera clase gratis</span>
+        <h2 style="margin-top:16px">¿Empezamos?</h2>
+        <div class="info">
+          <span>91 071 23 98</span>
+          <span>695 90 52 43 · WhatsApp</span>
+          <span style="font-weight:500;color:var(--muted)">Móstoles, Madrid · L–V 10–13:30 y 16–21 h</span>
+        </div>
+      </div>
+      <form id="form" novalidate>
+        <label for="f-name">Nombre<input id="f-name" required placeholder="Tu nombre"></label>
+        <label for="f-phone">Teléfono<input id="f-phone" type="tel" required placeholder="600 000 000"></label>
+        <label for="f-course">Me interesa
+          <select id="f-course"><option>Baby &amp; Infant English</option><option>Primaria y bilingüismo</option><option>Exámenes oficiales</option><option>Refuerzo escolar</option><option>Adultos</option></select>
+        </label>
+        <button class="btn magnet" type="submit" style="justify-self:start">Quiero mi clase <span class="arrow"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12L12 4M6 4h6v6"/></svg></span></button>
+        <p class="msg" id="msg" hidden></p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fword" aria-hidden="true"><span>H</span><span>E</span><span>L</span><span>L</span><span>I</span><span>N</span><span>S</span></div>
+    <div class="fbar">
+      <span>© <span id="year">2026</span> Academia Hellins · Móstoles</span>
+      <nav aria-label="Pie"><a href="#cursos">Cursos</a><a href="#test">Test</a><a href="#profes">Equipo</a><a href="#contacto">Contacto</a><a href="../">Versión clásica</a></nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+  document.documentElement.classList.add('js');
+  $('#year').textContent = new Date().getFullYear();
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(pointer:fine)').matches;
+  const arrow = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12L12 4M6 4h6v6"/></svg>';
+
+  /* letras: entrada escalonada */
+  $$('#word > *').forEach((el,i) => el.style.animationDelay = (i*0.07)+'s');
+
+  /* palabras que rotan */
+  function rotator(el, delay){
+    const n = el.children.length - 1; let i = 0;
+    setTimeout(() => setInterval(() => {
+      i++; el.style.transition = 'transform .7s cubic-bezier(.7,0,.2,1)';
+      el.style.transform = `translateY(-${i*1.18}em)`;
+      if (i === n) setTimeout(() => { el.style.transition = 'none'; el.style.transform = 'none'; i = 0; }, 750);
+    }, 2600), delay);
+  }
+  if (!reduce){ rotator($('#rot1'), 0); rotator($('#rot2'), 1300); }
+
+  /* cursor + parallax de píldoras */
+  const blob = $('#blob'); let mx = innerWidth/2, my = innerHeight/2, bx = mx, by = my;
+  addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; });
+  $$('a,button,.flip,.opt').forEach(el => { el.addEventListener('pointerenter', () => blob.classList.add('big')); el.addEventListener('pointerleave', () => blob.classList.remove('big')); });
+  const floaters = $$('#floaters .pill');
+  (function loop(){
+    bx += (mx-bx)*.18; by += (my-by)*.18;
+    blob.style.transform = `translate(${bx-13}px,${by-13}px)`;
+    if (!reduce){
+      const dx = (mx/innerWidth-.5), dy = (my/innerHeight-.5);
+      floaters.forEach((f,i) => f.style.transform = `translate(${dx*(20+i*8)}px,${dy*(14+i*6)}px)`);
+    }
+    requestAnimationFrame(loop);
+  })();
+
+  /* tarjetas con inclinación 3D */
+  if (fine && !reduce) $$('.tilt').forEach(c => {
+    c.style.transition = 'transform .4s';
+    c.addEventListener('pointermove', e => { const r = c.getBoundingClientRect(), x = (e.clientX-r.left)/r.width-.5, y = (e.clientY-r.top)/r.height-.5; c.style.transform = `perspective(900px) rotateY(${x*8}deg) rotateX(${-y*8}deg) scale(1.01)`; });
+    c.addEventListener('pointerleave', () => c.style.transform = '');
+  });
+
+  /* botones magnéticos */
+  if (fine && !reduce) $$('.magnet').forEach(b => {
+    b.addEventListener('pointermove', e => { const r = b.getBoundingClientRect(); b.style.transform = `translate(${(e.clientX-r.left-r.width/2)*.18}px,${(e.clientY-r.top-r.height/2)*.3}px)`; });
+    b.addEventListener('pointerleave', () => b.style.transform = '');
+  });
+
+  /* menú */
+  const burger = $('#burger'), links = $('#navlinks');
+  burger.addEventListener('click', () => burger.setAttribute('aria-expanded', links.classList.toggle('open')));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { links.classList.remove('open'); burger.setAttribute('aria-expanded', false); }));
+
+  /* texto que se ilumina al hacer scroll */
+  const man = $('#manifesto'), hl = ['usa.','primer','minuto,','solo.'];
+  man.innerHTML = man.textContent.split(' ').map(w => `<span class="w${hl.includes(w)?' hl':''}">${w}</span>`).join(' ');
+  const words = [...man.children];
+
+  /* scroll horizontal de cursos */
+  const hs = $('.hs'), track = $('#track'), bar = $('#hsbar');
+  const wide = () => innerWidth > 760;
+  function sizeHs(){ hs.style.height = wide() ? (track.scrollWidth - innerWidth + innerHeight + 80) + 'px' : 'auto'; }
+  sizeHs(); addEventListener('resize', sizeHs); addEventListener('load', sizeHs);
+
+  /* scroll: progreso, cursos, manifiesto, nav */
+  let lastY = 0; const nav = $('#nav');
+  function onScroll(){
+    const y = scrollY, H = document.documentElement.scrollHeight - innerHeight;
+    $('#progress').style.transform = `scaleX(${H>0?y/H:0})`;
+    if (wide()){
+      const top = hs.offsetTop, len = hs.offsetHeight - innerHeight;
+      const p = Math.min(1, Math.max(0, (y - top) / len));
+      track.style.transform = `translateX(${-p*(track.scrollWidth - innerWidth)}px)`;
+      bar.style.transform = `scaleX(${p})`;
+    }
+    const r = man.getBoundingClientRect(), k = Math.min(1, Math.max(0, (innerHeight*.85 - r.top) / (r.height + innerHeight*.35)));
+    const lit = Math.round(k*words.length);
+    words.forEach((w,i) => w.style.opacity = (reduce || i < lit) ? 1 : .16);
+    nav.style.transform = (y > lastY && y > 600) ? 'translateY(-120%)' : '';
+    lastY = y;
+  }
+  addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  /* test de nivel */
+  const Q = [
+    ['She ___ to school every day.', ['go','goes','going'], 1],
+    ['If I ___ more time, I would travel.', ['have','had','will have'], 1],
+    ['I wish I ___ that earlier.', ['knew','had known','know'], 1]
+  ];
+  const quiz = $('#quiz'); let qi = 0, score = 0;
+  function renderQ(){
+    if (qi === Q.length){
+      const lvl = ['A1','A2','B1','B2'][score];
+      quiz.innerHTML = `<div class="result"><p style="color:var(--muted)">Tu nivel orientativo</p><div class="lvl">${lvl}</div><p style="margin-block:10px 20px">${score}/3 aciertos. Ven a la prueba gratuita y te decimos tu grupo exacto.</p><a href="#contacto" class="btn">Reservar prueba <span class="arrow">${arrow}</span></a><p style="margin-top:14px"><button class="opt" id="again" style="display:inline-block">Repetir test</button></p></div>`;
+      $('#again').onclick = () => { qi = 0; score = 0; renderQ(); };
+      return;
+    }
+    const [q, opts, ok] = Q[qi];
+    quiz.innerHTML = `<div class="qbar">${Q.map((_,i)=>`<i class="${i<=qi?'on':''}"></i>`).join('')}</div><p class="q">${qi+1}. ${q}</p><div class="opts">${opts.map((o,i)=>`<button class="opt" type="button" data-i="${i}">${o}</button>`).join('')}</div>`;
+    quiz.querySelectorAll('.opt').forEach(b => b.onclick = () => {
+      const i = +b.dataset.i; if (i === ok) score++;
+      b.classList.add(i === ok ? 'ok' : 'ko'); quiz.querySelectorAll('.opt')[ok].classList.add('ok');
+      quiz.querySelectorAll('.opt').forEach(x => x.disabled = true);
+      setTimeout(() => { qi++; renderQ(); }, 700);
+    });
+  }
+  renderQ();
+
+  /* órbita de exámenes */
+  function place(ring, items){
+    items.forEach((t,i) => {
+      const a = i/items.length*Math.PI*2, s = document.createElement('span');
+      s.className = 'pill ' + (i%2 ? 'p' : 'c');
+      s.style.left = (50 + 50*Math.cos(a)) + '%'; s.style.top = (50 + 50*Math.sin(a)) + '%';
+      s.innerHTML = `<span>${t}</span>`; ring.appendChild(s);
+    });
+  }
+  place($('#ring1'), ['KET','PET','First','Advanced','TOEIC','EvAU']);
+  place($('#ring2'), ['Starters','Movers','Flyers']);
+
+  /* profesores */
+  const T = [
+    ['Laura Hellín','Directora · C2','../img/profe-ana.jpg','Cada alumno aprende a su ritmo: nuestro trabajo es encontrarlo.',['Exámenes','Familias']],
+    ['James Carter','Nativo · UK','../img/j-profe-gafas.jpg','Speaking first. Si hablas desde el primer día, lo demás llega solo.',['Adultos','Speaking club']],
+    ['Marta Ruiz','Infantil','../img/profe-marta.jpg','Con los peques el inglés se canta, se juega y se vive.',['Baby English','Phonics']],
+    ['David López','ESO y Bach.','../img/profe-david.jpg','Un buen simulacro vale más que diez fichas de gramática.',['Refuerzo','EvAU']]
+  ];
+  $('#teachers').innerHTML = T.map(t => `<div class="flip rv" tabindex="0"><div class="flip-in"><div class="face"><img src="${t[2]}" alt="${t[0]}"><div class="name"><b>${t[0]}</b><small>${t[1]}</small></div></div><div class="back"><q>${t[3]}</q><div><b>${t[0]}</b><div class="tags" style="margin-top:10px">${t[4].map(x=>`<span class="pill c">${x}</span>`).join('')}</div></div></div></div></div>`).join('');
+  $$('.flip').forEach(f => { f.addEventListener('click', () => f.classList.toggle('on')); f.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' '){ e.preventDefault(); f.classList.toggle('on'); } }); });
+
+  /* opiniones (dos filas en movimiento) */
+  const R = [
+    ['Cristina M.','Mi hija empezó con 2 años y hoy entiende los dibujos en inglés sin subtítulos.','../img/opinion-1.jpg'],
+    ['Álex R.','Aprobé el First a la primera. Los simulacros me quitaron los nervios.','../img/j-chico.jpg'],
+    ['Javier P.','Mi hijo pasó de suspender mates a sacar notables en 2º de la ESO.','../img/opinion-2.jpg'],
+    ['Sara G.','El speaking club de los jueves es lo mejor de mi semana.','../img/j-alegre.jpg'],
+    ['Pablo R.','Necesitaba el TOEIC para cambiar de trabajo. Muy práctico.','../img/alumno-adulto.jpg'],
+    ['Nuria T.','Grupos pequeños de verdad. Los profes conocen a cada niño.','../img/j-sonrisa.jpg']
+  ];
+  const card = r => `<div class="rv-card"><img src="${r[2]}" alt=""><div><span class="stars">★★★★★</span><p>${r[1]}</p><b>${r[0]}</b></div></div>`;
+  const half = (a) => a.map(card).join('');
+  $('#reviews').innerHTML = `<div class="rtrack">${half(R)}${half(R)}</div><div class="rtrack rev">${half([...R].reverse())}${half([...R].reverse())}</div>`;
+
+  /* formulario demo */
+  $('#form').addEventListener('submit', e => {
+    e.preventDefault(); const m = $('#msg'); m.hidden = false;
+    m.textContent = e.target.checkValidity() ? 'Formulario de demostración: todavía no envía datos. Llama al 91 071 23 98 para reservar.' : 'Escribe tu nombre y un teléfono para que podamos llamarte.';
+  });
+
+  /* contadores + entradas */
+  function count(el){
+    if (reduce) return;
+    const end = +el.dataset.count, suf = el.dataset.suffix || '', t0 = performance.now();
+    (function tick(t){ const k = Math.min(1,(t-t0)/1800); el.textContent = Math.round(end*(1-Math.pow(1-k,4))).toLocaleString('es-ES') + suf; if (k<1) requestAnimationFrame(tick); })(t0);
+  }
+  $$('[data-count]').forEach(el => setTimeout(() => count(el), 900));
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.12});
+  $$('.rv').forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>
