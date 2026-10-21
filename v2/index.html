@@ -66,7 +66,7 @@
   @keyframes spin{to{transform:rotate(360deg)}}
   .meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;position:relative}
   .meta div{display:flex;gap:8px;flex-wrap:wrap}
-  .tagline{color:var(--cream);font-size:clamp(1rem,1.8vw,1.4rem);margin-top:34px;position:relative}
+  .tagline{color:var(--cream);font-size:clamp(1rem,1.8vw,1.4rem);margin-top:10px;position:relative}
   .word{position:relative;display:flex;align-items:flex-end;justify-content:space-between;font-family:var(--display);font-weight:800;color:var(--cream);font-size:clamp(3.2rem,14.6vw,13.5rem);line-height:.86;letter-spacing:-.04em;margin-top:6px;user-select:none}
   .word .ch{display:inline-block;animation:drop 1s cubic-bezier(.3,1.5,.5,1) both;transition:transform .35s cubic-bezier(.3,1.6,.5,1),color .3s;cursor:default}
   .word .ch:hover{transform:translateY(-12%) rotate(-6deg);color:var(--lime)}
@@ -81,7 +81,7 @@
   @keyframes bob{50%{translate:0 -14px}}
 
   /* ---------- SCREEN (bento) ---------- */
-  .screen{background:var(--lime);border-radius:34px;padding:14px;margin-top:-1.2vw;position:relative;z-index:2;box-shadow:0 40px 80px -40px rgba(0,0,0,.6)}
+  .screen{background:var(--lime);border-radius:34px;padding:14px;margin-top:clamp(18px,2.4vw,34px);position:relative;z-index:2;box-shadow:0 40px 80px -40px rgba(0,0,0,.6)}
   header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;padding-block:10px;transition:transform .4s}
   body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--forest);z-index:70}
   .navbar{display:flex;align-items:center;gap:10px;background:var(--lime);border-radius:999px;padding:6px;box-shadow:0 14px 30px -18px rgba(0,0,0,.6)}
@@ -101,7 +101,7 @@
   .hero-card{background:var(--paper);padding:clamp(22px,3.4vw,44px);display:flex;flex-direction:column;justify-content:space-between;gap:26px;min-height:420px}
   .big{font-family:var(--display);font-size:clamp(2.2rem,5vw,4.3rem);font-weight:600;line-height:1.02;color:var(--ink)}
   .big .row{display:flex;align-items:center;flex-wrap:wrap;gap:.2em}
-  .big .outlined{border:2px solid var(--forest);border-radius:999px;padding:.02em .32em .08em;color:var(--forest);display:inline-block;overflow:hidden;position:relative;height:1.18em;vertical-align:bottom}
+  .big .outlined{border:2px solid var(--forest);border-radius:999px;padding:.04em .36em .1em;color:var(--forest);display:inline-block;overflow:hidden;position:relative;height:1.18em;vertical-align:bottom}
   .rot{display:inline-flex;flex-direction:column;transition:transform .7s cubic-bezier(.7,0,.2,1)}
   .rot span{height:1.18em;line-height:1.1;display:block;white-space:nowrap}
   .dots{display:inline-flex;gap:0}
@@ -223,9 +223,12 @@
   @keyframes pulse{50%{transform:scale(1.05)}}
   .ring{position:absolute;inset:0;border-radius:50%;border:1.5px dashed rgba(251,247,220,.3);animation:spin 36s linear infinite}
   .ring.r2{inset:14%;animation-duration:24s;animation-direction:reverse}
-  .ring .pill{position:absolute;transform:translate(-50%,-50%)}
-  .ring .pill > span{display:inline-block;animation:spin 36s linear infinite reverse}
-  .ring.r2 .pill > span{animation:spin 24s linear infinite}
+  .ring .sat{position:absolute;width:0;height:0}
+  .ring .sat .pill{position:absolute;left:0;top:0;transform:translate(-50%,-50%)}
+  .ring .sat > span{animation:counter 36s linear infinite}
+  .ring.r2 .sat > span{animation:counter2 24s linear infinite}
+  @keyframes counter{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(-360deg)}}
+  @keyframes counter2{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
   .exams ul{list-style:none;display:grid;gap:12px;color:var(--cream)}
   .exams li{display:flex;justify-content:space-between;gap:16px;border-bottom:1px solid rgba(251,247,220,.2);padding-bottom:12px;font-size:1.05rem}
   .exams li b{font-family:var(--display);font-weight:600;color:var(--lime)}
@@ -317,6 +320,25 @@
   }
   @media (max-width:760px){
     .floaters{display:none}
+    .word{font-size:12.4vw;letter-spacing:-.05em;margin-top:14px}
+    .word .shape{width:.56em;height:.66em}
+    .word .shape.drop{width:.64em}
+    .screen{margin-top:14px;padding:10px;border-radius:26px}
+    .hero-card{min-height:0;gap:22px;padding:24px 20px}
+    .big{font-size:clamp(1.9rem,9.6vw,2.6rem)}
+    .hero-actions .btn{width:100%;justify-content:space-between}
+    .hero-actions .pill{width:100%;justify-content:center}
+    .tall{min-height:360px}
+    .teachers{grid-template-columns:1fr 1fr;gap:10px}
+    .flip{aspect-ratio:3/4}
+    .face .name{left:8px;right:8px;bottom:8px;padding:8px 10px;border-radius:14px;font-size:.85rem}
+    .back{padding:16px}
+    .back q{font-size:.92rem}
+    .back .pill{font-size:.7rem;padding:4px 9px}
+    .cta h2{font-size:clamp(1.6rem,8.2vw,2.8rem)}
+    .orbit-box{max-width:calc(100% - 130px)}
+    .orbit-box .center{font-size:1.6rem}
+    .ring .pill{font-size:.72rem;padding:5px 10px}
     .row3{grid-template-columns:1fr 1fr}
     .row3 .mini.photo{grid-column:1/-1}
     .nav-cta .hide-sm{display:none}
@@ -329,41 +351,13 @@
     section{padding-block:56px}
   }
   @media (max-width:480px){
-    .teachers,.steps{grid-template-columns:1fr}
-    .flip{aspect-ratio:4/5}
+    .steps{grid-template-columns:1fr}
   }
 </style>
 </head>
 <body>
 <div class="progress" id="progress"></div>
 <div class="blob" id="blob" aria-hidden="true"></div>
-<div class="demo">Propuesta de diseño · textos, precios y personas de ejemplo (fotos generadas con IA)</div>
-
-<!-- TOP / WORDMARK -->
-<div class="top">
-  <svg class="orbit" viewBox="0 0 1400 900" preserveAspectRatio="none" aria-hidden="true">
-    <g><ellipse cx="700" cy="450" rx="620" ry="260" transform="rotate(-18 700 450)"/></g>
-    <g><ellipse cx="700" cy="450" rx="520" ry="330" transform="rotate(24 700 450)"/></g>
-  </svg>
-  <div class="wrap">
-    <div class="meta">
-      <div><span class="pill o">Academia de idiomas</span><span class="pill o">Móstoles</span></div>
-      <div><span class="pill o">Curso 2026–27</span></div>
-    </div>
-    <p class="tagline">Inglés y refuerzo escolar para todas las edades</p>
-    <div class="word" id="word" aria-label="Hellins">
-      <span class="ch">H</span><span class="ch">E</span><span class="shape bubble"><span></span></span><span class="ch">L</span><span class="ch">L</span><span class="ch">I</span><span class="ch">N</span><span class="shape drop"><span></span></span><span class="ch">S</span>
-    </div>
-    <div class="floaters" id="floaters" aria-hidden="true">
-      <span class="pill p" style="left:42%;top:18%">Baby English desde 1 año</span>
-      <span class="pill l" style="right:6%;top:24%;animation-delay:-2s">Cambridge B2 First</span>
-      <span class="pill l" style="left:6%;top:62%;animation-delay:-1s">Speaking clubs</span>
-      <span class="pill p" style="left:38%;top:70%;animation-delay:-3s">Apoyo al bilingüismo</span>
-      <span class="pill c" style="left:28%;top:84%;animation-delay:-4s">TOEIC</span>
-      <span class="pill c" style="right:12%;top:68%;animation-delay:-2.5s">Refuerzo ESO y Bach.</span>
-    </div>
-  </div>
-</div>
 
 <header class="nav" id="nav">
   <div class="wrap">
@@ -380,6 +374,29 @@
     </div>
   </div>
 </header>
+
+<!-- TOP / WORDMARK -->
+<div class="top">
+  <svg class="orbit" viewBox="0 0 1400 900" preserveAspectRatio="none" aria-hidden="true">
+    <g><ellipse cx="700" cy="450" rx="620" ry="260" transform="rotate(-18 700 450)"/></g>
+    <g><ellipse cx="700" cy="450" rx="520" ry="330" transform="rotate(24 700 450)"/></g>
+  </svg>
+  <div class="wrap">
+    <p class="tagline">Inglés y refuerzo escolar para todas las edades</p>
+    <div class="word" id="word" aria-label="Hellins">
+      <span class="ch">H</span><span class="ch">E</span><span class="shape bubble"><span></span></span><span class="ch">L</span><span class="ch">L</span><span class="ch">I</span><span class="ch">N</span><span class="shape drop"><span></span></span><span class="ch">S</span>
+    </div>
+    <div class="floaters" id="floaters" aria-hidden="true">
+      <span class="pill p" style="left:42%;top:18%">Baby English desde 1 año</span>
+      <span class="pill l" style="right:6%;top:24%;animation-delay:-2s">Cambridge B2 First</span>
+      <span class="pill l" style="left:6%;top:62%;animation-delay:-1s">Speaking clubs</span>
+      <span class="pill p" style="left:38%;top:70%;animation-delay:-3s">Apoyo al bilingüismo</span>
+      <span class="pill c" style="left:28%;top:84%;animation-delay:-4s">TOEIC</span>
+      <span class="pill c" style="right:12%;top:68%;animation-delay:-2.5s">Refuerzo ESO y Bach.</span>
+    </div>
+  </div>
+</div>
+
 
 <main id="inicio">
 <div class="wrap">
@@ -561,6 +578,7 @@
 <footer>
   <div class="wrap">
     <div class="fword" aria-hidden="true"><span>H</span><span>E</span><span>L</span><span>L</span><span>I</span><span>N</span><span>S</span></div>
+    <p class="demo" style="background:none;padding:0;margin-top:24px;text-align:left">Propuesta de diseño · textos, precios y personas de ejemplo (fotos generadas con IA)</p>
     <div class="fbar">
       <span>© <span id="year">2026</span> Academia Hellins · Móstoles</span>
       <nav aria-label="Pie"><a href="#cursos">Cursos</a><a href="#test">Test</a><a href="#profes">Equipo</a><a href="#contacto">Contacto</a><a href="../">Versión clásica</a></nav>
@@ -683,9 +701,9 @@
   function place(ring, items){
     items.forEach((t,i) => {
       const a = i/items.length*Math.PI*2, s = document.createElement('span');
-      s.className = 'pill ' + (i%2 ? 'p' : 'c');
+      s.className = 'sat';
       s.style.left = (50 + 50*Math.cos(a)) + '%'; s.style.top = (50 + 50*Math.sin(a)) + '%';
-      s.innerHTML = `<span>${t}</span>`; ring.appendChild(s);
+      s.innerHTML = `<span class="pill ${i%2 ? 'p' : 'c'}">${t}</span>`; ring.appendChild(s);
     });
   }
   place($('#ring1'), ['KET','PET','First','Advanced','TOEIC','EvAU']);
