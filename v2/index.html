@@ -175,6 +175,12 @@
   .course.c4{background:var(--paper)}
   .course.c5{background:var(--forest-2);color:var(--cream)}
   .course.c5 .arrow{background:var(--lime);color:var(--ink)}
+  .hs .head{margin-bottom:min(28px,3vh)!important}
+  .hs .head h2{font-size:clamp(1.8rem,min(5vw,7.5vh),4rem)}
+  .hs .head .pill{margin-bottom:min(16px,1.6vh)}
+  .hs .course{min-height:0;padding:min(24px,2.6vh) 24px;gap:min(18px,1.8vh)}
+  .hs .course .ph{aspect-ratio:auto;height:clamp(140px,26vh,280px)}
+  .hs .course h3{font-size:clamp(1.25rem,min(2vw,3.4vh),1.6rem)}
   .hs-hint{color:#c9d3b4;font-size:.85rem;margin-top:22px;padding-left:var(--gl)}
   .hs-bar{height:3px;background:rgba(251,247,220,.15);border-radius:3px;margin:16px var(--gr) 0 var(--gl);overflow:hidden}
   .hs-bar i{display:block;height:100%;width:100%;background:var(--lime);transform-origin:left;transform:scaleX(0)}
@@ -302,6 +308,12 @@
     .navlinks.open a{padding-block:10px}
     .nav-cta{margin-left:auto}
     .burger{display:block;margin-left:0}
+  }
+  @media (max-height:559px){
+    .hs{height:auto!important}
+    .hs-sticky{position:static;height:auto;padding-block:40px}
+    .hs-track{overflow-x:auto;scroll-snap-type:x mandatory;transform:none!important;padding-bottom:10px}
+    .hs-bar{display:none}
   }
   @media (max-width:760px){
     .floaters{display:none}
@@ -619,7 +631,7 @@
 
   /* scroll horizontal de cursos */
   const hs = $('.hs'), track = $('#track'), bar = $('#hsbar');
-  const wide = () => innerWidth > 760;
+  const wide = () => innerWidth > 760 && innerHeight >= 560;
   function sizeHs(){ hs.style.height = wide() ? (track.scrollWidth - innerWidth + innerHeight + 80) + 'px' : 'auto'; }
   sizeHs(); addEventListener('resize', sizeHs); addEventListener('load', sizeHs);
 
